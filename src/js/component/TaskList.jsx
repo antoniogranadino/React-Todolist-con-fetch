@@ -1,13 +1,7 @@
 import React from "react";
 
-
 const TaskList = (props) => {
-    return(
-        <div className="container border border-rounder border-success ">
-           {props.list}
-           
-        </div>
-    )
-}
+  return <ol className="p-0">{props.tasks}</ol>;
+};
 
-export default TaskList
+export default TaskList;

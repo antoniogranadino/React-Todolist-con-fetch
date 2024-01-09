@@ -1,0 +1,7 @@
+.show-icon {
+  display: none;
+}
+
+.icon-show:hover .show-icon {
+  display: flex;
+}
