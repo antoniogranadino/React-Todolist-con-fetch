@@ -6,6 +6,8 @@ const Input = (props) => {
     setTask(event.target.value);
   };
 
+  const api = props.getTasks;
+
   const handlesubmit = (e) => {
     e.preventDefault();
 
@@ -13,23 +15,17 @@ const Input = (props) => {
   };
 
   return (
-    <div>
-      <form
-        className="d-flex justify-content-between mb-3"
-        onSubmit={handlesubmit}
-      >
-        <input
-          size="55"
-          type="text"
-          className="form-control-md"
-          onChange={handlechange}
-          value={task}
-        />
-        <button type="submit" className="bg-danger">
-          Add
-        </button>
+    <>
+      <form className="form" onSubmit={handlesubmit}>
+        <input type="text" onChange={handlechange} value={task} />
+        <div className="button">
+          <button className="btn btn-success">Add</button>
+          <button onClick={props.deleteAllTasks} className="btn btn-secondary">
+            Clear
+          </button>
+        </div>
       </form>
-    </div>
+    </>
   );
 };
 

@@ -1,7 +1,11 @@
 import React from "react";
 
 const TaskList = (props) => {
-  return <ol className="p-0">{props.tasks}</ol>;
+  return (
+    <div className="tasks">
+      <div>{props.tasks}</div>
+    </div>
+  );
 };
 
 export default TaskList;

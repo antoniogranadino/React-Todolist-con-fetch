@@ -1,50 +1,113 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "./Input";
-import TaskList from "./TaskList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TaskList from "./TaskList";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Container = () => {
   const [list, setList] = useState([]);
   let listLenght = list.length;
 
+  const endpoint =
+    "https://playground.4geeks.com/apis/fake/todos/user/antoniogranadino";
+
+  async function createUser() {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([]),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+  }
+
+  async function getTasks() {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    console.log(data);
+    if (response.ok) {
+      setList(data);
+    }
+    return data;
+  }
+
+  async function updateTasks(list) {
+    const response = await fetch(endpoint, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(list),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+  }
+
   const deleteTask = (index) => {
     const newList = list.filter((_, i) => i !== index);
     setList(newList);
   };
 
+  async function deleteAllTasks(data) {
+    const response = await fetch(endpoint, {
+      method: "DELETE",
+      body: JSON.stringify(setList([])),
+    });
+  }
+
   const addTask = (task) => {
-    setList([...list, task]);
+    setList([
+      ...list,
+      {
+        label: task,
+        done: false,
+      },
+    ]);
   };
 
-  const tasks = list.map((lists, index) => {
+  const tasks = list.map((task, index) => {
     return (
-      <div
-        key={index}
-        className="d-flex justify-content-between my-1 icon-show"
-      >
-        <span className="py-1 text-break">{lists}</span>
-        <FontAwesomeIcon
-          icon={faXmark}
-          onClick={() => deleteTask(index)}
-          className="fs-3 show-icon"
-        ></FontAwesomeIcon>
+      <div key={index} className="icon-show">
+        <div className="task">{task.label}</div>
+        <FontAwesomeIcon icon={faXmark} onClick={() => deleteTask(index)} />
       </div>
     );
   });
 
+  useEffect(() => {
+    createUser();
+    getTasks();
+  }, []);
+
+  useEffect(() => {
+    updateTasks(list);
+  }, [list]);
+
   return (
-    <div className="vh-100 border border-warning d-flex justify-content-center align-items-start">
-      <div className="w-50 my-2 text-center border border-dark">
-        <h1 className="text-center mt-5 display-1">Todo</h1>
-        <div className="p-3">
-          <Input addTask={addTask} />
+    <div className="container">
+      <div className="todo">
+        <h1 className="text">Todo</h1>
+        <div className="list">
+          <Input
+            deleteAllTasks={deleteAllTasks}
+            addTask={addTask}
+            getTasks={getTasks}
+          />
           <TaskList
-            className="d-flex justify-content-around"
-            tasks={list.length === 0 ? <p>Add tasks</p> : tasks}
+            tasks={
+              list.length === 0 ? (
+                <p className="text-addTasks">Add tasks</p>
+              ) : (
+                tasks
+              )
+            }
           />
         </div>
-        <div>Items Left: {listLenght}</div>
+        <div className="text-items">Items Left: {listLenght}</div>
       </div>
     </div>
   );

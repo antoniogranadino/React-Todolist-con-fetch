@@ -1,7 +1,99 @@
+* {
+  margin: 0;
+  background-color: lightcyan;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.todo {
+  position: relative;
+  width: 400px;
+  height: 600px;
+  border: 6px solid rgb(87, 83, 83);
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+}
+
+.tasks {
+  overflow: auto;
+  height: 400px;
+  margin-top: 10px;
+}
+
+.task {
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.svg-inline--fa {
+  height: 20px;
+  width: 20px;
+  background-color: rgb(87, 83, 83);
+}
+
+.text {
+  font-family: monospace;
+  font-size: 90px;
+  display: flex;
+  justify-content: center;
+}
+
+.text-addTasks {
+  display: flex;
+  justify-content: center;
+}
+
+.text-items {
+  position: absolute;
+  bottom: 0;
+  left: 150px;
+  display: flex;
+  justify-content: center;
+}
+
 .show-icon {
   display: none;
 }
 
+.icon-show {
+  overflow: auto;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-left: 40px;
+}
+
 .icon-show:hover .show-icon {
   display: flex;
+  float: right;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+input {
+  border-radius: 7px;
+  margin-right: 5px;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+}
+
+.btn.btn-success {
+  margin-right: 10px;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
 }
